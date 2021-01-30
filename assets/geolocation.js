@@ -1,48 +1,31 @@
-var x = document.getElementById("status");
+function geoFindMe() {
 
-function showPosition(position) {
-    console.log("in there");
+  const status = document.querySelector('#status');
+  const mapLink = document.querySelector('#map-link');
 
-    console.log(position);
+  mapLink.href = '';
+  mapLink.textContent = '';
 
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
-}
+  function success(position) {
+    const latitude  = position.coords.latitude;
+    const longitude = position.coords.longitude;
 
-function getLocation() {
-  if (navigator.geolocation) {
-    console.log("****");
-    navigator.geolocation.getCurrentPosition(showPosition);
-    console.log("****");
-    sleep(10000);
+    status.textContent = '';
+    mapLink.href = "https://www.openstreetmap.org/#map=18/${latitude}/${longitude}";
+    mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+  }
+
+  function error() {
+    status.textContent = 'Unable to retrieve your location';
+  }
+
+  if(!navigator.geolocation) {
+    status.textContent = 'Geolocation is not supported by your browser';
   } else {
-    x.innerHTML = "Geolocation is not supported by this browser.";
+    status.textContent = 'Locating…';
+    navigator.geolocation.getCurrentPosition(success, error);
   }
+
 }
 
-function sleep(milliseconds) { 
-    let timeStart = new Date().getTime(); 
-    while (true) { 
-      let elapsedTime = new Date().getTime() - timeStart; 
-      if (elapsedTime > milliseconds) { 
-        break; 
-      } 
-    } 
-  } 
-
-function showError(error) {
-    switch(error.code) {
-      case error.PERMISSION_DENIED:
-        x.innerHTML = "User denied the request for Geolocation."
-        break;
-      case error.POSITION_UNAVAILABLE:
-        x.innerHTML = "Location information is unavailable."
-        break;
-      case error.TIMEOUT:
-        x.innerHTML = "The request to get user location timed out."
-        break;
-      case error.UNKNOWN_ERROR:
-        x.innerHTML = "An unknown error occurred."
-        break;
-    }
-  }
+document.querySelector('#find-me').addEventListener('click', geoFindMe);
