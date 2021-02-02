@@ -6,6 +6,7 @@ function showPosition() {
   }
 }
 
+
 function showMap(position) {
 
   lat = position.coords.latitude;
@@ -42,6 +43,7 @@ function resetMap() {
   if (document.getElementById("embedMap").style.display=="none") {
     document.getElementById("embedMap").style.display="block";
   }
+  console.log(resetMap)
 }
 
 
