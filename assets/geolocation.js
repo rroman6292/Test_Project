@@ -24,7 +24,9 @@ function showMap(position) {
   
   var map = new google.maps.Map(document.getElementById("embedMap"), myOptions);
   var marker = new google.maps.Marker({ position:latlong, map:map, title:"You are here!" });
+  document.getElementById("embedMap").style.display="block";
 }
+
 
 
 function showError(error) {
@@ -40,11 +42,9 @@ function showError(error) {
 }
 
 function resetMap() {
-  if (document.getElementById("embedMap").style.display=="none") {
-    document.getElementById("embedMap").style.display="block";
-  }
-  console.log(resetMap)
+  document.getElementById("embedMap").style.display=="none";
 }
+
 
 
 
